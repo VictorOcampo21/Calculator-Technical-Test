@@ -1,17 +1,17 @@
 const express = require('express');
-const winston = require('winston'); // Importamos winston para logging
+const winston = require('winston');
 const app = express();
 const path = require('path');
 
 // Configuración de Winston para logs
 const logger = winston.createLogger({
-  level: 'info', // Nivel de log predeterminado
+  level: 'info',
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(winston.format.colorize(), winston.format.simple())
-    }), // Log en consola
-    new winston.transports.File({ filename: 'logs/error.log', level: 'error' }), // Logs de errores en archivo
-    new winston.transports.File({ filename: 'logs/combined.log' }) // Todos los logs en archivo
+    }),
+    new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'logs/combined.log' })
   ]
 });
 
@@ -21,61 +21,57 @@ app.use(express.json());
 // Servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Función para enviar respuestas de error de forma uniforme
+const sendErrorResponse = (res, status, message) => {
+  const timestamp = new Date().toISOString();
+  logger.error(`${message} IP: ${res.req.ip}`);
+  return res.status(status).json({ error: message, timestamp });
+};
+
+// Función para realizar las operaciones matemáticas
+const performOperation = (num1, num2, operacion) => {
+  const operations = {
+    suma: (a, b) => a + b,
+    resta: (a, b) => a - b,
+    multiplicacion: (a, b) => a * b,
+    division: (a, b) => a / b
+  };
+
+  // Si la operación es división, validamos si num2 es cero
+  if (operacion === 'division' && num2 === 0) {
+    return null;  // Dividir por cero no es válido
+  }
+
+  if (!operations[operacion]) return null;  // Operación no válida
+  return operations[operacion](num1, num2);
+};
+
 // Ruta para la operación matemática
 app.post('/api/operacion', (req, res) => {
   const { num1, num2, operacion } = req.body;
 
   // Validación de entrada
   if (num1 === undefined || num2 === undefined || !operacion) {
-    logger.error(`Faltan parámetros. num1: ${num1}, num2: ${num2}, operacion: ${operacion}. IP: ${req.ip}`);
-    return res.status(400).json({
-      error: 'Faltan parámetros: num1, num2 y operacion son necesarios.',
-      timestamp: new Date().toISOString()
-    });
+    return sendErrorResponse(res, 400, 'Faltan parámetros: num1, num2 y operacion son necesarios.');
   }
 
   // Validar si num1 y num2 son números válidos (no NaN)
   if (isNaN(num1) || isNaN(num2)) {
-    logger.error(`Parametros invalidos. num1: ${num1}, num2: ${num2}. IP: ${req.ip}`);
-    return res.status(400).json({
-      error: 'Los valores de num1 y num2 deben ser números.',
-      timestamp: new Date().toISOString()
-    });
+    return sendErrorResponse(res, 400, 'Los valores de num1 y num2 deben ser números.');
   }
 
-  let resultado;
-
   // Realizamos la operación matemática
-  switch (operacion) {
-    case 'suma':
-      resultado = num1 + num2;
-      break;
-    case 'resta':
-      resultado = num1 - num2;
-      break;
-    case 'multiplicacion':
-      resultado = num1 * num2;
-      break;
-    case 'division':
-      if (num2 === 0) {
-        logger.error(`División por cero intentada. num1: ${num1}, num2: ${num2}. IP: ${req.ip}`);
-        return res.status(400).json({
-          error: 'No se puede dividir por cero.',
-          timestamp: new Date().toISOString()
-        });
-      }
-      resultado = num1 / num2;
-      break;
-    default:
-      logger.error(`Operación no válida. operacion: ${operacion}. IP: ${req.ip}`);
-      return res.status(400).json({
-        error: 'Operación no válida. Usa suma, resta, multiplicacion o division.',
-        timestamp: new Date().toISOString()
-      });
+  const resultado = performOperation(num1, num2, operacion);
+  if (resultado === null) {
+    // Si el resultado es null, significa que hubo un error en la operación (división por cero o operación no válida)
+    if (operacion === 'division' && num2 === 0) {
+      return sendErrorResponse(res, 400, 'No se puede dividir por cero.');
+    }
+    return sendErrorResponse(res, 400, 'Operación no válida. Usa suma, resta, multiplicacion o division.');
   }
 
   // Log de la operación exitosa
-  logger.info(`Operación exitosa. operacion: ${operacion}, num1: ${num1}, num2: ${num2}, resultado: ${resultado}, IP: ${req.ip}`);
+  logger.info(`Operación exitosa. operacion: ${operacion}, num1: ${num1}, num2: ${num2}, resultado: ${resultado}, IP: ${res.req.ip}`);
 
   // Respondemos con el resultado
   res.status(200).json({

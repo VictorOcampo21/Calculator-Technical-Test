@@ -30,3 +30,16 @@
 {"level":"error","message":"Parametros invalidos. num1: a, num2: 5. IP: ::1"}
 {"level":"info","message":"Operación exitosa. operacion: suma, num1: 1, num2: 5, resultado: 6, IP: ::1"}
 {"level":"error","message":"División por cero intentada. num1: 1, num2: 0. IP: ::1"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"info","message":"Operación exitosa. operacion: division, num1: 1, num2: 1, resultado: 1, IP: ::1"}
+{"level":"info","message":"Operación exitosa. operacion: suma, num1: 1, num2: 1, resultado: 2, IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"error","message":"No se puede dividir por cero. IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"info","message":"Operación exitosa. operacion: multiplicacion, num1: 1, num2: 0, resultado: 0, IP: ::1"}
+{"level":"info","message":"Operación exitosa. operacion: multiplicacion, num1: 1, num2: 2, resultado: 2, IP: ::1"}

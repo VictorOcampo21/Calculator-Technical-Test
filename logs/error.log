@@ -9,3 +9,10 @@
 {"level":"error","message":"Error inesperado: Unexpected token 'a', ...\"  \"num1\": a,\r\n  \"num\"... is not valid JSON, stack: SyntaxError: Unexpected token 'a', ...\"  \"num1\": a,\r\n  \"num\"... is not valid JSON\n    at JSON.parse (<anonymous>)\n    at parse (C:\\Users\\vjc\\Documents\\GitHub\\Calculator-Technical-Test\\node_modules\\body-parser\\lib\\types\\json.js:92:19)\n    at C:\\Users\\vjc\\Documents\\GitHub\\Calculator-Technical-Test\\node_modules\\body-parser\\lib\\read.js:128:18\n    at AsyncResource.runInAsyncScope (node:async_hooks:211:14)\n    at invokeCallback (C:\\Users\\vjc\\Documents\\GitHub\\Calculator-Technical-Test\\node_modules\\raw-body\\index.js:238:16)\n    at done (C:\\Users\\vjc\\Documents\\GitHub\\Calculator-Technical-Test\\node_modules\\raw-body\\index.js:227:7)\n    at IncomingMessage.onEnd (C:\\Users\\vjc\\Documents\\GitHub\\Calculator-Technical-Test\\node_modules\\raw-body\\index.js:287:7)\n    at IncomingMessage.emit (node:events:518:28)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21), IP: ::1"}
 {"level":"error","message":"Parametros invalidos. num1: a, num2: 5. IP: ::1"}
 {"level":"error","message":"División por cero intentada. num1: 1, num2: 0. IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
+{"level":"error","message":"No se puede dividir por cero. IP: ::1"}
+{"level":"error","message":"Operación no válida. Usa suma, resta, multiplicacion o division. IP: ::1"}
