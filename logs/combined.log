@@ -1,0 +1,15 @@
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"error","message":"Error al procesar la solicitud: The client is closed"}
+{"level":"error","message":"Error al procesar la solicitud: The client is closed"}
+{"level":"error","message":"Error al procesar la solicitud: The client is closed"}
+{"level":"error","message":"Error al procesar la solicitud: The client is closed"}
+{"level":"info","message":"Servidor corriendo en http://localhost:3000"}
+{"level":"info","message":"Operación exitosa. operacion: suma, num1: 10, num2: 5, resultado: 15, IP: ::1"}
