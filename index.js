@@ -1,6 +1,7 @@
 const express = require('express');
 const winston = require('winston'); // Importamos winston para logging
 const app = express();
+const path = require('path');
 
 // Configuración de Winston para logs
 const logger = winston.createLogger({
@@ -17,21 +18,25 @@ const logger = winston.createLogger({
 // Middleware para parsear el cuerpo de la solicitud en formato JSON
 app.use(express.json());
 
+// Servir archivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Ruta para la operación matemática
 app.post('/api/operacion', (req, res) => {
   const { num1, num2, operacion } = req.body;
 
   // Validación de entrada
   if (num1 === undefined || num2 === undefined || !operacion) {
-    logger.error(`Faltan parámetros. num1: ${num1}, num2: ${num2}, operacion: ${operacion}. IP: ${req.ip}`); // Auditoría de error
+    logger.error(`Faltan parámetros. num1: ${num1}, num2: ${num2}, operacion: ${operacion}. IP: ${req.ip}`);
     return res.status(400).json({
       error: 'Faltan parámetros: num1, num2 y operacion son necesarios.',
       timestamp: new Date().toISOString()
     });
   }
 
-  if (typeof num1 !== 'number' || typeof num2 !== 'number') {
-    logger.error(`Parametros invalidos. num1: ${num1}, num2: ${num2}. IP: ${req.ip}`); // Auditoría de error
+  // Validar si num1 y num2 son números válidos (no NaN)
+  if (isNaN(num1) || isNaN(num2)) {
+    logger.error(`Parametros invalidos. num1: ${num1}, num2: ${num2}. IP: ${req.ip}`);
     return res.status(400).json({
       error: 'Los valores de num1 y num2 deben ser números.',
       timestamp: new Date().toISOString()
@@ -53,7 +58,7 @@ app.post('/api/operacion', (req, res) => {
       break;
     case 'division':
       if (num2 === 0) {
-        logger.error(`División por cero intentada. num1: ${num1}, num2: ${num2}. IP: ${req.ip}`); // Auditoría de error
+        logger.error(`División por cero intentada. num1: ${num1}, num2: ${num2}. IP: ${req.ip}`);
         return res.status(400).json({
           error: 'No se puede dividir por cero.',
           timestamp: new Date().toISOString()
@@ -62,7 +67,7 @@ app.post('/api/operacion', (req, res) => {
       resultado = num1 / num2;
       break;
     default:
-      logger.error(`Operación no válida. operacion: ${operacion}. IP: ${req.ip}`); // Auditoría de error
+      logger.error(`Operación no válida. operacion: ${operacion}. IP: ${req.ip}`);
       return res.status(400).json({
         error: 'Operación no válida. Usa suma, resta, multiplicacion o division.',
         timestamp: new Date().toISOString()
